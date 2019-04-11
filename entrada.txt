@@ -2,3 +2,4 @@
 1 label_1
 2 label_2
 *edges
+1 2 10

@@ -1,7 +1,7 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include "Vertice.h"
+#include "../include/Vertice.h"
 
 #include <vector>
 #include <string>
@@ -10,6 +10,7 @@ class Grafo{
 
 public:
   Grafo();
+  ~Grafo();
   Grafo(std::string arquivo);
   bool ler(std::string arquivo);
 
@@ -18,10 +19,10 @@ public:
   int grau(int vertice);
   std::string rotulo(int vertice);
   bool haAresta(int vertice1, int vertice2);
-  std::unordered_set
+  void imprimir();
 
 private:
-  std::vector<Vertice> _vertices;
+  std::vector<Vertice*>* _vertices;
 
 };
 
