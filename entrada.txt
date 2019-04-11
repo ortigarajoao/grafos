@@ -1,0 +1,4 @@
+*vertices 2
+1 label_1
+2 label_2
+*edges
