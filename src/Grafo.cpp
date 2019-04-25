@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <limits>
 
 #include "../include/Grafo.h"
 
@@ -27,6 +28,7 @@ Grafo::Grafo(std::string arquivo){
         if(strAux.compare("*edges") == 0){
           std::getline(_arquivo, strAux);
           while(_arquivo.good()){
+            _qtdArestas++;
             pos = strAux.find_first_of(" ");
             int vertice1 = std::stoi(strAux.substr(0,pos));
             int pos2 = strAux.find_first_of(" ",pos+1);
@@ -54,9 +56,70 @@ Grafo::~Grafo(){
   delete _vertices;
 }
 
-void Grafo::imprimir(){
-  std::cout << "Aqui: " << (*_vertices)[1]->rotulo() << '\n';
-  for(std::vector<Vertice*>::iterator it = _vertices->begin(); it != _vertices->end(); ++it ){
-    std::cout << "Vertice: " << (*it)->indice() << ", Rotulo: " << (*it)->rotulo() << '\n';
+int Grafo::qtdVertices(){
+  return _vertices->size();
+}
+
+int Grafo::qtdArestas(){
+  return _qtdArestas;
+}
+
+int Grafo::grau(int vertice){
+  return (*_vertices)[vertice]->grau();
+}
+
+std::string Grafo::rotulo(int vertice){
+  return (*_vertices)[vertice]->rotulo();
+}
+
+std::unordered_set<Vertice*>* Grafo::adjacentes(int vertice){
+  return (*_vertices)[vertice]->adjacentes();
+}
+
+bool Grafo::haAresta(int vertice1, int vertice2){
+  return (*_vertices)[vertice1]->haAresta((*_vertices)[vertice2]);
+}
+
+double Grafo::peso(int vertice1, int vertice2){
+  if(this->haAresta(vertice1,vertice2)){
+    return (*_vertices)[vertice1]->peso((*_vertices)[vertice2]);
+  } else {
+    return std::numeric_limits<double>::max();
+  }
+}
+
+void Grafo::imprimirVertices(){
+  for (int i = 1; i <= (*_vertices).size(); i++){
+    std::cout << "Vertice: " << (*_vertices)[i]->indice() << ", Rotulo: " << (*_vertices)[i]->rotulo() << '\n';
+  }
+}
+
+void Grafo::imprimirArestas(int vertice){
+  std::unordered_set<Vertice*>* adj = (*_vertices)[vertice]->adjacentes();
+  for (auto it = adj->begin(); it != adj->end(); ++it){
+    std::cout << (*it)->indice() << ", ";
+  }
+  std::cout << '\n';
+}
+
+Vertice* Grafo::vertice(int v){
+  return (*_vertices)[v];
+}
+
+void Grafo::buscaLargura(int v){
+  std::vector<bool> visitados(this->qtdVertices());
+  std::queue<Vertice*> fila;
+  fila.push((*_vertices)[v]);
+  visitados[v] = true;
+  int nivel = 0;
+  while(!fila.empty()){
+    Vertice* atual = fila.pop();
+    std::unordered_set<Vertice*>* adj = atual->adjacentes;
+    for (auto it = adj->begin(); it != adj->end(); ++it){
+      if(!visitados[(*it)->indice()]){
+        visitados[(*it)->indice()] = true;
+
+      }
+    }
   }
 }

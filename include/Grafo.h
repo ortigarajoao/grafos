@@ -18,11 +18,18 @@ public:
   int qtdArestas();
   int grau(int vertice);
   std::string rotulo(int vertice);
+  std::unordered_set<Vertice*>* adjacentes(int vertice);
   bool haAresta(int vertice1, int vertice2);
-  void imprimir();
+  double peso(int vertice1, int vertice2);
+  void imprimirVertices();
+  void imprimirArestas(int vertice);
+  Vertice* vertice(int v);
+
+  void buscaLargura(int v);
 
 private:
   std::vector<Vertice*>* _vertices;
+  int _qtdArestas = 0; //Para diminuir procuras
 
 };
 
