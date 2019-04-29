@@ -151,15 +151,48 @@ void Grafo::buscaLargura(int v){
 }
 
 bool Grafo::hierholzer(){
-  //std::unordered_map<std::pair<Vertice*,Vertice*>,bool> visitados;
-  //std::vector<Vertice*> ciclo;
-  //for(auto it = _arestas.begin(); it != _arestas.end(); ++it){
-    //visitados.insert(std::make_pair<std::pair<Vertice*,Vertice*>,bool>((*it),false);
-  //}
-  //Vertice* v = (*_vertices)[1];
+  std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>* visitados = new std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>();
+  std::vector<Vertice*>* ciclo;
+  for(auto it = _arestas.begin(); it != _arestas.end(); ++it){
+    std::pair<std::pair<Vertice*,Vertice*>*,bool> par((*it),false);
+    visitados->insert(par);
+  }
+  if(!buscaSubcicloEuleriano(1, visitados, ciclo)){
+    std::cout << "0" << '\n';
+    return false
+  } else {
+    for(auto it = visitados->begin(); it != visitados->end(); ++it){
+      if(!it->second){
+        return false;
+      }
+    }
+    std::cout << "1" << '\n';
+    std::string imprimir;
+    for(auto it = ciclo->begin(); it != ciclo->end(); ++it){
+      imprimir += std::to_string((*it)->indice()) + ",";
+    }
+    imprimir.erase(imprimir.cend()-1);
+    std::cout << imprimir << '\n';
+    return true;
+  }
+  std::cout << "0" << '\n';
   return false;
+}
 
+bool Grafo::buscaSubcicloEuleriano(int v, std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>* visitados, std::vector<Vertice*> ciclo){
+  ciclo->insert((*_vertices)[v]);
+  int t = v;
+  do {
+    std::unordered_set<Vertice*>* adj = (*_vertices)[v]->adjacentes();
 
+    for(auto it = adj->begin(); it != adj->end(); ++it){
+      std::pair<Vertice*,Vertice*>* par = new std::pair<Vertice*,Vertice*>*((*it),(*_vertices)[v]);
+      //if(!visitados.at(par)){
+        //return false;
+      //}
+    }
+  } while(v != t);
+  return false;
 }
 
 void Grafo::floydWarshall(){
@@ -192,7 +225,7 @@ void Grafo::floydWarshall(){
 bool Grafo::bellmanFord(int v){
   std::vector<double> distancias(this->qtdVertices()+1, std::numeric_limits<double>::max());
   std::vector<int> antecessores(this->qtdVertices()+1, -1);
-  distancias[v] = 0;  
+  distancias[v] = 0;
   for(int i = 1; i <= this->qtdVertices()-1; i++){
     for(auto it = _arestas.begin(); it != _arestas.end(); ++it){
       if(distancias[(*it)->second->indice()] > distancias[(*it)->first->indice()] + (*it)->first->peso((*it)->second)){
