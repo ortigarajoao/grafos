@@ -4,7 +4,10 @@
 #include "../include/Vertice.h"
 
 #include <vector>
+#include <unordered_set>
+#include <set>
 #include <string>
+#include <utility>
 
 class Grafo{
 
@@ -26,9 +29,14 @@ public:
   Vertice* vertice(int v);
 
   void buscaLargura(int v);
+  bool bellmanFord(int v);
+  void floydWarshall();
+  bool hierholzer();
+  bool buscaSubcicloEuleriano();
 
 private:
   std::vector<Vertice*>* _vertices;
+  std::unordered_set<std::pair<Vertice*,Vertice*>*> _arestas;
   int _qtdArestas = 0; //Para diminuir procuras
 
 };
