@@ -159,7 +159,7 @@ bool Grafo::hierholzer(){
   }
   if(!buscaSubcicloEuleriano(1, visitados, ciclo)){
     std::cout << "0" << '\n';
-    return false
+    return false;
   } else {
     for(auto it = visitados->begin(); it != visitados->end(); ++it){
       if(!it->second){
@@ -179,8 +179,8 @@ bool Grafo::hierholzer(){
   return false;
 }
 
-bool Grafo::buscaSubcicloEuleriano(int v, std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>* visitados, std::vector<Vertice*> ciclo){
-  ciclo->insert((*_vertices)[v]);
+bool Grafo::buscaSubcicloEuleriano(int v, std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>* visitados, std::vector<Vertice*>* ciclo){
+  /*ciclo->insert((*_vertices)[v]);
   int t = v;
   do {
     std::unordered_set<Vertice*>* adj = (*_vertices)[v]->adjacentes();
@@ -191,7 +191,7 @@ bool Grafo::buscaSubcicloEuleriano(int v, std::unordered_map<std::pair<Vertice*,
         //return false;
       //}
     }
-  } while(v != t);
+  } while(v != t);*/
   return false;
 }
 

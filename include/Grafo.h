@@ -32,7 +32,7 @@ public:
   bool bellmanFord(int v);
   void floydWarshall();
   bool hierholzer();
-  bool buscaSubcicloEuleriano(int v, std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>* visitados, std::vector<Vertice*> ciclo);
+  bool buscaSubcicloEuleriano(int v, std::unordered_map<std::pair<Vertice*,Vertice*>*,bool>* visitados, std::vector<Vertice*>* ciclo);
 
 private:
   std::vector<Vertice*>* _vertices;
